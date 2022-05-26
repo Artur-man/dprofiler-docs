@@ -22,85 +22,88 @@ Once you've made your way to the website, or you have a local instance of Dprofi
 
 .. image:: ../dprofiler_pics2/data_load.png
 	:align: center
-	
-|
 
 To begin the analysis, you need to upload your data files (comma or semicolon separated, i.e. ".csv", or tab separated, i.e. ".tsv", format) to be analyzed and choose appropriate separator for the file (comma, semicolon or tab).
 
 There are three types input data in Dprofiler. These are:
 
-* **Bulk Expression Data**: used for profiling samples within and establish homogeneous reference profiles.
-* **scRNA Expression Data Object**: used for deconvoluting Bulk RNA data and infering cellular compositions of these bulk samples.
-* **Reference Bulk Expression Data**: used for comparative profiling of the Bulk data set using reference phenotypic profiles of reference bulk data set(s).
+* **Bulk Expression Data**: used for profiling samples within and establish homogeneous reference profiles. The user should provide a count data but uploading a metadata is optional.
+* **scRNA Expression Data Object**: used for deconvoluting Bulk RNA data and infering cellular compositions of these bulk samples. Both single cell count data and the marker table are optional. 
+* **Reference Bulk Expression Data**: used for comparative profiling of the Bulk data set using reference phenotypic profiles of reference bulk data set(s). Both reference count data and the metadata are optional.
 
-If you do not have a dataset to upload, you can use the built in demo data file by clicking on the 'Load Demo Vitiligo' button that loads a case study. To view the entire demo data file, you can download.
+If you do not have a dataset to upload, you can use the built in Psoriasis demo data file by clicking on the 'Load Demo Psoriasis' button that loads a case study. To view the entire demo data file, you can download.
 
-* `PRJNA554241 <https://www.ncbi.nlm.nih.gov/bioproject/PRJNA554241>`_: a bulk RNA-Seq count data of lesional and non-lesional vitiligo skin samples processed by the RNA-Seq pipeline of DolphinNext .
-* `scVitiligo <https://www.science.org/doi/10.1126/scitranslmed.abd8995>`_: a reference scRNA-Seq count data of lesional and non-lesional vitiligo skin samples.
-* `GSE65127 <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE65127>`_: an external bulk microarray data of vitiligo skin samples where the gene set is union of differentially expressed genes across four conditions: healthy, lesional, non-lesional and peri-lesional.
+* `GSE107871 <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107871>`_: a bulk RNA-Seq count data of lesional and non-lesional psoriasis skin samples as well as healthy control samples processed by the RNA-Seq pipeline of DolphinNext.
+* `E-MTAB-8142 <https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-8142/>`_: a reference scRNA-Seq count data of lesional and non-lesional Psoriasis skin samples.
+* `Human Skin RNA Atlas <https://dmeta.dolphinnext.com/>`_: an external reference dataset of integrated bulk RNA-Seq data from multiple Psoriasis studies across four conditions: healthy, lesional, non-lesional.
 
 Otherwise, you can start uploading your own data given instructions below.
 
 Input for Bulk Expression Data
 ==============================
 
-For both submitted Bulk and Reference Bulk expression data, you need to upload your data files (comma or semicolon separated, i.e. ".csv", or tab separated, i.e. ".tsv", format) to be analyzed and choose appropriate separator for the file (comma, semicolon or tab). However, for scRNA data set, the user should provide an ExpressionSet object. In addition, users may connect to DolphinMeta using their credentials to import reference bulk expression data from any Dmeta project.
+For both submitted Bulk and Reference Bulk expression data, you need to upload your data files (comma or semicolon separated, i.e. ".csv", or tab separated, i.e. ".tsv", format) to be analyzed and choose appropriate separator for the file (comma, semicolon or tab).
 
 An example structure of the count data files are shown below:
 
 ========  ======  ======  ======  ======  ======  ======  ======  ======  ======  ====== 
-gene      P39_NL  P39_L   P33_NL  P33_L   P22_NL  P22_L   P19_NL  P19_L   P65_NL  P65_L
+gene      P1_NL   P1_L    P2_NL   P2_L    P3_NL   P3_L    P4_NL   P4_L    P5_NL   P5_L
 ========  ======  ======  ======  ======  ======  ======  ======  ======  ======  ======
 A1BG      46      29      104     27      42      17      65      101     27      32
 A1BG-AS1  27      18      48      13      10      3       39      54      23      24
 A1CF      5       0       38      15      2       0       4       7       0       3
 ========  ======  ======  ======  ======  ======  ======  ======  ======  ======  ======
 
-In addition to the count data file; you might need to upload metadata files to correct for batch effects or any other normalizing conditions you might want to address that might be within your results. To handle for these conditions, simply create a metadata file by using the example table at below. Metadata file also simplifies condition selection for complex data. The columns you define in this file can be selected in condition selection page. Make sure you have defined two conditions per column. If there are more than two conditions in a column, those can be defined empty. Please note that, if your data is not complex, metadata file is optional, you don't need to upload. 
+In addition to the count data file; you might need to upload metadata files to correct for batch effects or any other normalizing conditions you might want to address that might be within your results. To handle for these conditions, simply create a metadata file by using the example table at below. Metadata file also simplifies condition selection for complex data. The columns you define in this file can be selected in condition selection page. Make sure you have defined two conditions per column. If there are more than two conditions in a column, those can be defined empty. Please note that, if your data is not complex, metadata file is optional, you don't need to upload. Hence only for submitted bulk expression data, a count data is mandatory. However for reference bulk expression data, both count data and metadata are optional.
 
 In the example below, the "patient" column may serve as a batch or a normalizing condition.  
 
 ============  =======  =========
 sample        patient  treatment
 ============  =======  =========
-P39_NL        P39      NL
-P39_L         P39      L
-P33_NL        P33      NL
-P33_L         P33      L
-P22_NL        P22      NL
-P22_L         P22      L
-P19_NL        P19      NL
-P19_L         P19      L
-P65_NL        P65      NL
-P65_L         P65      L      
+P1_NL         P1       NL
+P1_L          P1       L
+P2_NL         P2       NL
+P2_L          P2       L
+P3_NL         P3       NL
+P3_L          P3       L
+P4_NL         P4       NL
+P4_L          P4       L
+P5_NL         P5       NL
+P5_L          P5       L      
 ============  =======  =========
 
 Metadata file can be formatted with comma, semicolon or tab separators similar to count data files. These files used to establish different batch effects for multiple conditions. You can have as many conditions as you may require, as long as all of the samples are present. 
 
-Alternatively, you can connect to your `DolphinMeta (Dmeta) <https://dmeta.readthedocs.io/en/latest/>`_ account using your access token and import external expression profiles and associated metadata. 
-
 Input for scRNA Expression Data
 ===============================
 
-However, for scRNA data set, the user should provide an .rds file containing an `ExpressionSet <https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf>`_ object whose metadata (pData(`You Expression Set Object`)) should include the following variables or columns:", 
+For scRNA data set, the user should provide an .rds file containing an `ExpressionSet <https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf>`_ object whose metadata (pData(`You Expression Set Object`)) should include the following variables or columns:
 
-* **(i)** sample associated to each barcode 
+* **(i)** sample/donor associated to each barcode 
 * **(ii)** total UMI counts of each barcode  
-* **(iii)** cell annotation or label of each barcodes
+* **(iii)** (multiple) cell annotation or label of each barcodes 
 * **(iv)** other categorical and numerical variables relavant to barcodes
+
+In addition, users should provide a marker table associated with the scRNA ExpressionSet object. Typically, the marker table should include the following columns: 
+
+* **gene:** a column with gene names
+* **cluster** a column with cluster names
+* **Level** a column that points to the metadata column in scRNA ExpressionSet object including the cluster names.
+
+Upload Summary
+==============
 
 Once the count data and metadata files have been loaded in Dprofiler, you can click upload button to visualize your data as shown below:
 
 .. image:: ../dprofiler_pics2/upload_summary.png
 	:align: center
 
-|
-
 You have the option to search samples or other terms within submitted or reference bulk Expression data sets, and you also have the option to visualize the t-SNE and other numeric measures of your barcodes within the uploaded scRNA expression data object. 
 
-After reviewing your uploaded data in "Upload Summary" panels, and if specified the metadata file containing your batch correction fields, you then have the option to filter low counts and conduct batch effect correction prior to your analysis. Alternatively, you may skip these steps and directly continue with Computational Profiling analysis. 
+After reviewing your uploaded data in "Upload Summary" panels, and if specified the metadata file containing your batch correction fields, you then have the option to filter low counts and conduct batch effect correction prior to your analysis. Alternatively, you may skip these steps and directly continue with Computational Phenotypic Profiling analysis. 
 
-Data analysis steps such as "Low Count Filtering", "Batch Effect Correction", "Computational Profiling" are only applicable to the submitted bulk expression data, and other submitted reference scRNA and bulk RNA datasets are used for referential purposes and assumed to be already filtered and analyzed before submission.
+Data analysis steps such as "Low Count Filtering", "Batch Effect Correction", "Computational Phenotypic Profiling" are only applicable to the submitted bulk expression data, and other submitted reference scRNA and bulk RNA datasets are used for referential purposes and assumed to be already filtered and analyzed before submission.
 
 Low Count Filtering
 ===================
@@ -161,7 +164,6 @@ Upon clicking submit button, comparison tables and plots will be created on the 
 	:align: center
 	:width: 99%
 
-
 You can investigate the changes on the data by comparing following features:
 
 * Read counts for each sample.
@@ -173,7 +175,6 @@ You can investigate the changes on the data by comparing following features:
   You can investigate the gene/region vs samples data in detail by clicking the **Show Data** button, or download all corrected data by clicking **Download** button.
 
 Since we have completed **batch effect correction and normalization** step, we can continue with 'Go to Computational Profiling'. This takes you to page where computational profiling is conducted with popular DE analysis methods like DESeq2, EdgeR or Limma. 
-
 
 Computational Profiling
 =======================
