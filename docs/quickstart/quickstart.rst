@@ -99,8 +99,13 @@ Once the count data and metadata files have been loaded in Dprofiler, you can cl
 .. image:: ../dprofiler_pics2/upload_summary.png
 	:align: center
 
-You have the option to search samples or other terms within submitted or reference bulk Expression data sets, and you also have the option to visualize the t-SNE and other numeric measures of your barcodes within the uploaded scRNA expression data object. 
+|
+You have the option to search samples or other terms within submitted bulk Expression data set, and you also have the option to visualize the t-SNE and other numeric measures of your barcodes within the uploaded scRNA expression data object. You can also search and browse samples within the reference bulk Expression data set. 
 
+.. image:: ../dprofiler_pics2/upload_summary2.png
+	:align: center
+
+|
 After reviewing your uploaded data in "Upload Summary" panels, and if specified the metadata file containing your batch correction fields, you then have the option to filter low counts and conduct batch effect correction prior to your analysis. Alternatively, you may skip these steps and directly continue with Computational Phenotypic Profiling analysis. 
 
 Data analysis steps such as "Low Count Filtering", "Batch Effect Correction", "Computational Phenotypic Profiling" are only applicable to the submitted bulk expression data, and other submitted reference scRNA and bulk RNA datasets are used for referential purposes and assumed to be already filtered and analyzed before submission.
@@ -116,7 +121,11 @@ In this section, you can simultaneously visualize the changes of your submitted 
 
 After selection of filtering methods and entering threshold value, you can proceed by clicking **Filter** button which is located just bottom part of the **Filtering Methods** box. On the right part of the screen, your filtered dataset will be visualized for comparison as shown at figure below. 
 
-.. image:: ../dprofiler_pics2/filtering.png
+.. image:: ../dprofiler_pics2/filtering1.png
+	:align: center
+	:width: 99%
+	
+.. image:: ../dprofiler_pics2/filtering2.png
 	:align: center
 	:width: 99%
 
@@ -135,7 +144,11 @@ You can easily compare following features, before and after filtering:
 	:align: center
 	:width: 70%
 
-Afterwards, you may continue your analysis with **Batch Effect Correction** or directly jump to **Computational Profiling** of your dataset.
+Afterwards, you may continue your analysis with **Batch Effect Correction** or directly move to three different kind of analysis by clicking: 
+
+* Go to Computational Phenotypic Profiling
+* Go to Compositional Profiling
+* Go to Comparative Profiling
 
 Batch Effect Correction and Normalization
 =========================================
@@ -174,13 +187,16 @@ You can investigate the changes on the data by comparing following features:
 
   You can investigate the gene/region vs samples data in detail by clicking the **Show Data** button, or download all corrected data by clicking **Download** button.
 
-Since we have completed **batch effect correction and normalization** step, we can continue with 'Go to Computational Profiling'. This takes you to page where computational profiling is conducted with popular DE analysis methods like DESeq2, EdgeR or Limma. 
+Since we have completed **batch effect correction and normalization** step, we can continue with either one of three kind of analysis by clicking:
 
-Computational Profiling
+* Go to Computational Phenotypic Profiling
+* Go to Compositional Profiling
+* Go to Comparative Profiling
+
+Computational Phenotypic Profiling
 =======================
 
-The first option, 'Go to Computational Profiling', takes you to the next step where an iterative differential expression analysis and
-scoring of samples takes place.
+The first option, 'Go to Computational Phenotypic Profiling', takes you to the next step where an iterative differential expression analysis and scoring of samples takes place.
 
 * **Sample Selection:** In order to run the analysis, you first need to select the initial set of samples which will be compared or may be removed throughout the analysis. To do so, choose **Select Meta** box as **treatment** to simplify fill ``Condition 1`` and ``Condition 2`` based on the **treatment** column of the metadata as shown below.
 
@@ -215,7 +231,6 @@ the first and last iteration are compared. The app also informs you about the pa
 	:align: center
 	
 |
-
 Additional information of initial and final DE genes can be found on plots below. Three **Scatter Plots** of initial and final genes, as well as the common genes in both list of DE genes will be plotted. You can switch to **Volcano Plot** and **MA Plot** by using **Plot Type** section at the left side of the *Discover** menu. Since these plots are interactive, you can click to **zoom** button on the top of the graph and select the area you would like to zoom in by drawing a rectangle. Please see the plots at below:
 
 .. image:: ../dprofiler_pics2/ma_plot.png
@@ -237,7 +252,6 @@ You can hover over the scatterplot points to display more information about the 
     :width: 30%
     
 |
-
 Next, you can initiate a Cellular composition analysis using either the Homogeneouos,  Heterogeneous conditions or marker genes, and deconvolute the Reference bulk expression data using the reference scRNA expression data by clicking "Go to Cellular Composition Analysis". Or, you can click to "Go to Comparative Profiling" for the comparative analysis between the submitted bulk RNA expression and reference bulk RNA data. 
 
 But before that, you can take a look and investigate DE genes of either initial or Final DE analysis from remaining panels. 
@@ -254,35 +268,34 @@ initial and final DE genes of the conditions.
 
 You can always download these results in CSV format by clicking the **Download** button. You can also download the plot or graphs by clicking on the **download** button at top of each plot or graph.
 
-Cellular Composition Analysis 
-=============================
+Cellular Composition Profiling 
+==============================
 
-By using the "Cellular Comp. Analysis" tab, you can determine which idents (or identifications, categories) are to be used to deconvolute the submitted bulk expression data. You can also choose which of those cell types within each ident are to be used for the deconvolution as well. Then you can also decide whether DE genes of initial or final DE analysis are used to deconvolute the data. You should decide which column in the scRNA metadata that the samples are introduced, this is required by the MUSIC algorithm to give weight to genes that are less variant across different samples. You can also determine the set of genes to deconvolute bulk samples where you can either use DE genes of impure or pure conditions associated to the initial and final DE analysis, or you can use the marker genes of all selected cell types stored in fData(`You scRNA Expression object`).  
+By using the "Cellular Composition Profiling" tab, you can determine which of the metadata fields or annotations identifications are to be used to deconvolute the submitted bulk expression data. You can also choose which of those cell types within each ident are to be used for the deconvolution as well. Then you can also decide whether all genes or a selected number of top marker genes will be used for the deconvolution. You should decide which column in the scRNA metadata that the samples are introduced, this is required by all three methods (MuSIC, BisqueRNA and SCDC) to either give weight to genes or normalize the bulk data set. Additional set of features of marker genes such as logFC or adjusted p-value thresholds as well as the percentage of non-zero counts for each marker genes can be specified by the user. 
 
 .. image:: ../dprofiler_pics2/conditions_compositions.png
 	:align: center
 	:width: 99%
 
 |
-
 After clicking the "Start" button, the results will be given in the "Cellular Compositions" panel. Membership Scores and estimated cell type fractions are given for each sample where each box of the table are highlighted with respect to cell type. 
 
 .. image:: ../dprofiler_pics2/cellular_composition.png
 	:align: center
 	:width: 99%
 	
-You can also visualize count data of Reference bulk expression data set with respect to cellular markers using interactive heatmaps. 
+|
+You can also visualize the count data of submitted bulk expression data set with respect to cellular markers using interactive heatmaps. 
 
 .. image:: ../dprofiler_pics2/composition_heatmap.png
 	:align: center
-	:width: 99%
+	:width: 60%
 	
 |
-	
-Comparative Profiling 
-=====================
+Comparative Phenotypic Profiling 
+================================
 
-By using the "Comparative Profiling" tab, you can to choose which metadata variables to use as a reference to compare samples and conditions
+By using the "Comparative Phenotypic Profiling" tab, you can to choose which metadata variables to use as a reference to compare samples and conditions
 across submitted and reference bulk rna expression datasets. You can select a subset of the data with **Select Series** option, select a metadata variable with **Select Meta** option, and choose membership scoring method by **Score Method** similar to in Computational profiling.
 
 .. image:: ../dprofiler_pics2/compprof_cond.png

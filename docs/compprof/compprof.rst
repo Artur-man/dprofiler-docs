@@ -1,5 +1,5 @@
 *************************************
-Comparative Profiling
+Comparative Phenotypic Profiling
 *************************************
 
 Dprofiler allows users to incorporate silhouette measures and non-negative least squares (NNLS)-based membership scores to profile submitted bulk RNA samples given external reference bulk samples.  

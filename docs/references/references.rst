@@ -39,3 +39,7 @@ References
 18. Giardine,B. et al. (2005) Galaxy: a platform for interactive large-scale genome analysis. Genome Res., 15, 1451–1455.
 
 19. Rousseeuw, P. J. (1987). Silhouettes: a graphical aid to the interpretation and validation of cluster analysis. Journal of computational and applied mathematics, 20, 53-65.
+
+20. Jew, B et al. (2020). Accurate estimation of cell composition in bulk expression through robust integration of single-cell information. Nature communications, 11(1), 1-11.
+
+21. Dong, M et al. (2021). SCDC: bulk gene expression deconvolution by multiple single-cell RNA sequencing references. Briefings in bioinformatics, 22(1), 416-427.

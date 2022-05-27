@@ -1,29 +1,42 @@
 *************************************
-Computational Profiling
+Computational Phenotypic Profiling
 *************************************
 
-This guide contains a brief discription of the Computational Profiling Analysis used within Dprofiler. 
+This guide contains a brief description of the Computational Profiling Analysis used within Dprofiler. 
 
 
-Introduction
-============
+An Iterative Profiling Algorithm
+================================
 
-Dprofiler provides methods for calculating membership scores to be used to profiling samples associated to phenotypic profiles of interest with the submitted dataset. By iteratively removing samples with low scores and repeatatively testing for differentially expressed genes, computational profiling analysis of Dprofiler converges if there are no more low-scored samples left in the data set. The final list of samples with high membership scores establish homogeneous (pure) reference profiles of these phenotypic groups, and they are used to calculate the final score to establish the profile of each individual sample:
-
-* Conducts a DE analysis (DESeq2, EdgeR or Limma) given remaining samples within the data.
-* Estimates the membership scores (based on either Silhouette and NNLS) of all samples given expression profiles limited to differentially expressed genes
-* Removes samples with low membership scores.
-* Repeats until no more samples have to be removed from the data.
-
-
-The Membership scores of samples are measured by two distinct similarity measures and methods. First of these measures is the Silhouette index that allows quality control of partitioning algorithms once datasets are clustered into meaningful subsets of samples. However, we utilize the silhouette index to detect those samples that do not well clustered or classified into their associated groups or conditions with the same label. The second method is based on a linear regression method whose coefficients are regularized to non-negative values as to calculate the
-percentage of input variables. Such a method allows us to model expression profile of each submitted sample given mean expression profiles of phenotypes/conditions where coefficient are associated to scores, representing the similarity between the condition and the submitted sample. 
-
-.. image:: ../dprofiler_pics2/InteractiveSilhouette.png
+.. image:: ../dprofiler_pics2/ComputationalProfiling.png
 	:align: center
 	:width: 60%
-	
+
 |
+
+Dprofiler provides methods for calculating membership scores to be used for profiling samples associated to phenotypic profiles of interest. By iteratively removing samples with low scores and repeatatively testing for differentially expressed genes, Dprofiler converges if there are no more low-scored samples left in the data set. The final list of samples with high membership scores establish homogeneous (pure) reference profiles of these phenotypic groups, and they are used to calculate the final score to establish the profile of each individual sample. Hence, Dprofiler
+
+* analyzes the cook's distance of all genes within each samples.
+* estimates the **intra-condition membership scores** given summarized cook's distances of all genes within each sample.
+* conducts a DE analysis (DESeq2, EdgeR or Limma) given remaining samples within the data.
+* estimates the **cross-condition membership scores** (based on either Silhouette and NNLS) of all samples given expression profiles limited to differentially expressed genes.
+* removes samples with low membership scores.
+* repeats until no more samples have to be removed from the data.
+
+Dprofiler provides two distinct types of membership scores that are aimed to interrogate the similarity of a sample to a phenotype. These are: 
+
+* **Intra-condition Membership Score**
+
+This membership score determines if the sample is simply an **outlier** of the phenotype or not; that is, its expression profile shows (or doesnt show) a highly dissimilar pattern given the remaining samples within the same phenotypic condition. This score is calculated using the **Cook's distance**. 
+
+* **Cross-condition Membership Score**
+
+This membership score determines if the sample is either similar to one phenotypic condition compared to the other condition(s). Dprofiler offers two methods to calculate the cross-condition membership score. First of these measures is the **Silhouette index** that allows quality control of partitioning algorithms once datasets are clustered into meaningful subsets of samples. However, we utilize the silhouette index to detect those samples that do not well clustered or classified into their associated groups or conditions. The second method is based on a linear regression method whose coefficients are regularized to non-negative values as to calculate the percentage of input variables. Such a method allows us to model expression profile of each submitted sample given mean expression profiles of phenotypes/conditions where coefficient are associated to scores, representing the similarity between the condition and the submitted sample. 
+
+Cook's Distance
+===============
+
+`Cook's distance <https://en.wikipedia.org/wiki/Cook%27s_distance)>`_ of a sample is simply provided by calculating the difference between estimated mean and dispersion parameters of each gene when the sample is removed from the analysis. The distance is the difference between two estimation of the underlying negative binomial parameters of the gene. We incorporate :math:`\alpha`'th quantile of the distribution of cook's distances of all genes (typically :math:`\alpha=75`). We calculate the intra-condition membership score as :math:`1-F(X,2,m-2)` where X being the :math:`\alpha`'th quantile of the distribution of cook's distances, :math:`F(X, d_{1}, d_{2})` is the cumulative distribution function of X being a random variate of F-distribution with degrees of freedom :math:`d_{1}` and :math:`d_{2}`. Here, :math:`m` is the number of samples in the condition. 
 
 Silhouette Measure
 ==================
