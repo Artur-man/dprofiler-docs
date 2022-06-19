@@ -91,6 +91,8 @@ In addition, users should provide a marker table associated with the scRNA Expre
 * **cluster** a column with cluster names
 * **Level** a column that points to the metadata column in scRNA ExpressionSet object including the cluster names.
 
+Users can employ the **getReferenceSingleCellRNA** function in Dprofiler to generate all files necessary for Compositional Profiling. The input should be a Seurat Object.
+
 Upload Summary
 ==============
 
